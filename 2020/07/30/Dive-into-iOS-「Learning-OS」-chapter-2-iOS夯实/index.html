@@ -1,4 +1,316 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 4.2.0"><link rel="apple-touch-icon" sizes="180x180" href="/uploads/H16.png"><link rel="icon" type="image/png" sizes="32x32" href="/uploads/H32.png"><link rel="icon" type="image/png" sizes="16x16" href="/uploads/H16.png"><link rel="mask-icon" href="/uploads/H16.png" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css"><script id="hexo-configurations">var NexT=window.NexT||{},CONFIG={hostname:"hahnero.github.io",root:"/",scheme:"Gemini",version:"7.7.1",exturl:!1,sidebar:{position:"left",display:"post",padding:18,offset:12,onmobile:!1},copycode:{enable:!1,show_result:!1,style:null},back2top:{enable:!0,sidebar:!1,scrollpercent:!1},bookmark:{enable:!1,color:"#222",save:"auto"},fancybox:!1,mediumzoom:!1,lazyload:!1,pangu:!1,comments:{style:"tabs",active:null,storage:!0,lazyload:!1,nav:null},algolia:{hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}},localsearch:{enable:!1,trigger:"auto",top_n_per_article:1,unescape:!1,preload:!1},motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}}}</script><meta name="description" content="闲聊一会过去入职这一个月，自我感觉自己进步还是挺大的。从0基础到能够独立编写一个github Demo，还是有不小的成就感。在这个过程中我也体会到了iOS开发的魅力，那就是所写即所得，你的代码质量能够直接从产出的app中体现出来。但是，仍然仍然仍然有很多问题需要我们从再去梳理与升华，今天我们就又来聊聊这些问题。"><meta property="og:type" content="article"><meta property="og:title" content="[Dive into iOS]「Learning OS」 | chapter 2 iOS夯实"><meta property="og:url" content="https://hahnero.github.io/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/index.html"><meta property="og:site_name" content="HahnBlog"><meta property="og:description" content="闲聊一会过去入职这一个月，自我感觉自己进步还是挺大的。从0基础到能够独立编写一个github Demo，还是有不小的成就感。在这个过程中我也体会到了iOS开发的魅力，那就是所写即所得，你的代码质量能够直接从产出的app中体现出来。但是，仍然仍然仍然有很多问题需要我们从再去梳理与升华，今天我们就又来聊聊这些问题。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://hahnero.github.io/images/pasted-16.png"><meta property="article:published_time" content="2020-07-30T13:13:00.000Z"><meta property="article:modified_time" content="2020-08-03T02:14:57.956Z"><meta property="article:author" content="Hahn Wang"><meta property="article:tag" content="Dive into iOS"><meta property="article:tag" content="iOS"><meta property="article:tag" content="OC"><meta property="article:tag" content="Learn OS"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://hahnero.github.io/images/pasted-16.png"><link rel="canonical" href="https://hahnero.github.io/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/"><script id="page-configurations">CONFIG.page={sidebar:"",isHome:!1,isPost:!0}</script><title>[Dive into iOS]「Learning OS」 | chapter 2 iOS夯实 | HahnBlog</title><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-header,.use-motion .comments,.use-motion .menu-item,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="container use-motion"><div class="headband"></div><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏"><span class="toggle-line toggle-line-first"></span><span class="toggle-line toggle-line-middle"></span><span class="toggle-line toggle-line-last"></span></div></div><div class="site-meta"><div><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">HahnBlog</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle">Until next time</p></div><div class="site-nav-right"></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-fw fa-home"></i> 首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i> 标签<span class="badge">16</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i> 分类<span class="badge">6</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i> 归档<span class="badge">10</span></a></li></ul></nav></div></header><div class="back-to-top"><i class="fa fa-arrow-up"></i> <span>0%</span></div><main class="main"><div class="main-inner"><div class="content-wrap"><div class="content"><div class="posts-expand"><article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://hahnero.github.io/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/uploads/avatar.png"><meta itemprop="name" content="Hahn Wang"><meta itemprop="description" content="A blog site of mine"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="HahnBlog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline"> [Dive into iOS]「Learning OS」 | chapter 2 iOS夯实</h1><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建时间：2020-07-30 21:13:00" itemprop="dateCreated datePublished" datetime="2020-07-30T21:13:00+08:00">2020-07-30</time></span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i></span> <span class="post-meta-item-text">更新于</span> <time title="修改时间：2020-08-03 10:14:57" itemprop="dateModified" datetime="2020-08-03T10:14:57+08:00">2020-08-03</time></span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span> ， <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/OC/" itemprop="url" rel="index"><span itemprop="name">OC</span></a></span></span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span> <span class="post-meta-item-text">Disqus：</span><a title="disqus" href="/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/#disqus_thread" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/07/30/Dive-into-iOS-「Learning-OS」-chapter-2-iOS夯实/" itemprop="commentCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><h2 id="闲聊一会"><a href="#闲聊一会" class="headerlink" title="闲聊一会"></a>闲聊一会</h2><p>过去入职这一个月，自我感觉自己进步还是挺大的。<br>从0基础到能够独立编写一个github Demo，还是有不小的成就感。<br>在这个过程中我也体会到了iOS开发的魅力，那就是所写即所得，你的代码质量能够直接从产出的app中体现出来。<br>但是，仍然仍然仍然有很多问题需要我们从再去梳理与升华，今天我们就又来聊聊这些问题。</p><a id="more"></a><h3 id="Fxxking-block"><a href="#Fxxking-block" class="headerlink" title="Fxxking block"></a>Fxxking block</h3><p>首先我还是先和大家继续聊聊block的问题，因为这个问题着实让我困扰了很久。<br>虽然看了很多block相关的介绍，但是都没有能够让我有一种豁然开朗的感觉。果然，这种事情还是得在开发之中去找G点的。<br>为了让各位能够更好的看懂block，我今天就用最通俗易懂的话来讲解什么事block。</p><h4 id="回调（callback）"><a href="#回调（callback）" class="headerlink" title="回调（callback）"></a>回调（callback）</h4><p>这个词起源于酒店叫醒，酒店提供了一个叫醒服务，但是叫醒的具体方式是客户去决定的，所以酒店在叫醒客户时实际上就完成了这个回调的过程。<br>伪码如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">酒店类：</span><br><span class="line"> - 叫醒（客户自定义方法）</span><br><span class="line"> </span><br><span class="line">客户类：</span><br><span class="line"> - 自定义叫醒方法</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 流程如下</span><br><span class="line">睡觉前</span><br><span class="line">用户使用酒店类的叫醒方法，并告诉酒店类自己希望的叫醒方式</span><br><span class="line">睡觉</span><br><span class="line">第二天早上</span><br><span class="line">酒店类叫醒用户，使用用户自定义的叫醒方式</span><br><span class="line">结束</span><br></pre></td></tr></table></figure><p>这就是一个典型的回调例子，即<strong><em>被调用方法使用调用者的代码段</em></strong>。<br>或许这么说仍然有同学会疑惑，那我们再把整个过程偏向代码规范一些：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@interface Hotel</span><br><span class="line">- (void)callBack:(void (^)(void))userCustomBlock;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation</span><br><span class="line">- (void)callBack:(void (^)(void))userCustomBlock</span><br><span class="line">&#123;</span><br><span class="line">	dispatch_async(dispatch_main_queue, ^&#123;</span><br><span class="line">    		&#x2F;&#x2F;wait until daybreak</span><br><span class="line">            !userCustomBlock ?: userCustomBlock;</span><br><span class="line">    	&#125;	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface User</span><br><span class="line">- (void)callForWakeUp;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation</span><br><span class="line">- (void)callForWakeUp</span><br><span class="line">&#123;</span><br><span class="line">	Hotel *hotel &#x3D; [[Hotel alloc] init];</span><br><span class="line">    [hotel callBack:^&#123;</span><br><span class="line">    	NSLog(@&quot;先打电话叫醒，不行就直接破门而入&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; &#x3D;&#x3D;&#x3D; divider &#x3D;&#x3D;&#x3D;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">	User *me &#x3D; [[User alloc] init];</span><br><span class="line">    [me callForWakeUp];</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>当然，上面的实现中也可以将user的自定义block作为属性持有，但是这里我们大体只演示回调这个过程。<br>不难从上面的代码看出，我们所写的自定义叫醒的代码段，作为一个“参数”(实际上也是)传入了callBack方法。不过这个参数有一些特殊，那就是它看起来不是某一类的实例(其实是)，而是一段代码段，这段代码是调用者使用时所编写的代码，但是却在被调用者中实现了。<br>你看，这就是回调。通过回调，我们可以极大的提升代码的复用率，因为对于hotel(被调用者)而言，叫醒方式是用户(调用者)自定义的，它的代码就可以一直被复用。<br>反之，如果我们不使用回调这个机制，那么对于每一个User实例(调用者)，hotel(被调用者)都要专门为其实现一个特定的调用方法。<br>在这个过程中，我们把参与回调的代码段成为Block，在java中这是lamda，在js中这是匿名函数，总之，每个语言都有自己对回调的实现方式(因为它实在是太好用了)。</p><p>那么，什么时候我们需要用到Blcok呢？或者说什么时候使用Block更好呢？</p><h4 id="时机"><a href="#时机" class="headerlink" title="时机"></a>时机</h4><p>我们不讲书本教程上提到的部分，仅凭我在开发过程中遇到的地方来说：</p><ul><li>需要异步传参数</li><li>通过代码段复用代码</li><li>异步执行时需要同步结束</li></ul><p>至于具体的细节，那就需要大家在开发过程中自己去细细体会了～</p><h3 id="再聊多线程"><a href="#再聊多线程" class="headerlink" title="再聊多线程"></a>再聊多线程</h3><p>任务：就是执行操作的意思，换句话说就是你在线程中执行的那段代码。在 GCD 中是放在 block 中的。执行任务有两种方式：『同步执行』 和 『异步执行』。两者的主要区别是：是否等待队列的任务执行结束，以及是否具备开启新线程的能力。</p><p>同步执行（sync）：<br>同步添加任务到指定的队列中，在添加的任务执行结束之前，会一直等待，直到队列里面的任务完成之后再继续执行。<br>只能在当前线程中执行任务，不具备开启新线程的能力。</p><p>异步执行（async）：<br>异步添加任务到指定的队列中，它不会做任何等待，可以继续执行任务。<br>可以在新的线程中执行任务，具备开启新线程的能力。</p><p>队列（Dispatch Queue）：这里的队列指执行任务的等待队列，即用来存放任务的队列。队列是一种特殊的线性表，采用 FIFO（先进先出）的原则，即新任务总是被插入到队列的末尾，而读取任务的时候总是从队列的头部开始读取。每读取一个任务，则从队列中释放一个任务。</p><p>在 GCD 中有两种队列：『串行队列』 和 『并发队列』。两者都符合 FIFO（先进先出）的原则。两者的主要区别是：执行顺序不同，以及开启线程数不同。</p><p>串行队列（Serial Dispatch Queue）：<br>每次只有一个任务被执行。让任务一个接着一个地执行。（只开启一个线程，一个任务执行完毕后，再执行下一个任务）</p><p>并发队列（Concurrent Dispatch Queue）：<br>可以让多个任务并发（同时）执行。（可以开启多个线程，并且同时执行任务）</p><p><img src="/images/pasted-16.png" alt="任务队列组合区别"></p><h3 id="回首掏"><a href="#回首掏" class="headerlink" title="回首掏"></a>回首掏</h3><p>这个总结我写了两遍，第一遍写完发现本地编辑服务器没开…<br>所以直接什么都没有了，草<br>这一遍就大致总结一下，希望有所帮助吧</p></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Dive-into-iOS/" rel="tag"><i class="fa fa-tag"></i> Dive into iOS</a><a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a><a href="/tags/OC/" rel="tag"><i class="fa fa-tag"></i> OC</a><a href="/tags/Learn-OS/" rel="tag"><i class="fa fa-tag"></i> Learn OS</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2020/07/15/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-1-iOS%E5%BC%80%E5%8F%91%E5%9F%BA%E6%9C%AC%E7%9B%98/" rel="prev" title="[Dive into iOS]「Learning OS」 | chapter 1 iOS开发基本盘"><i class="fa fa-chevron-left"></i> [Dive into iOS]「Learning OS」 | chapter 1 iOS开发基本盘</a></div><div class="post-nav-item"></div></div></footer></article></div></div><div class="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript></div></div><script>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/uploads/H16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/H32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/H16.png">
+  <link rel="mask-icon" href="/uploads/H16.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hahnero.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="闲聊一会过去入职这一个月，自我感觉自己进步还是挺大的。从0基础到能够独立编写一个github Demo，还是有不小的成就感。在这个过程中我也体会到了iOS开发的魅力，那就是所写即所得，你的代码质量能够直接从产出的app中体现出来。但是，仍然仍然仍然有很多问题需要我们从再去梳理与升华，今天我们就又来聊聊这些问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Dive into iOS]「Learning OS」 | chapter 2 iOS夯实">
+<meta property="og:url" content="https://hahnero.github.io/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/index.html">
+<meta property="og:site_name" content="HahnBlog">
+<meta property="og:description" content="闲聊一会过去入职这一个月，自我感觉自己进步还是挺大的。从0基础到能够独立编写一个github Demo，还是有不小的成就感。在这个过程中我也体会到了iOS开发的魅力，那就是所写即所得，你的代码质量能够直接从产出的app中体现出来。但是，仍然仍然仍然有很多问题需要我们从再去梳理与升华，今天我们就又来聊聊这些问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hahnero.github.io/images/pasted-16.png">
+<meta property="article:published_time" content="2020-07-30T13:13:00.000Z">
+<meta property="article:modified_time" content="2020-08-03T02:14:57.000Z">
+<meta property="article:author" content="Hahn Wang">
+<meta property="article:tag" content="Dive into iOS">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="OC">
+<meta property="article:tag" content="Learn OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hahnero.github.io/images/pasted-16.png">
+
+<link rel="canonical" href="https://hahnero.github.io/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>[Dive into iOS]「Learning OS」 | chapter 2 iOS夯实 | HahnBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HahnBlog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Until next time</p>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">16</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">10</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hahnero.github.io/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="Hahn Wang">
+      <meta itemprop="description" content="A blog site of mine">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahnBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [Dive into iOS]「Learning OS」 | chapter 2 iOS夯实
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-30 21:13:00" itemprop="dateCreated datePublished" datetime="2020-07-30T21:13:00+08:00">2020-07-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-03 10:14:57" itemprop="dateModified" datetime="2020-08-03T10:14:57+08:00">2020-08-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/OC/" itemprop="url" rel="index">
+                    <span itemprop="name">OC</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/07/30/Dive-into-iOS-「Learning-OS」-chapter-2-iOS夯实/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="闲聊一会"><a href="#闲聊一会" class="headerlink" title="闲聊一会"></a>闲聊一会</h2><p>过去入职这一个月，自我感觉自己进步还是挺大的。<br>从0基础到能够独立编写一个github Demo，还是有不小的成就感。<br>在这个过程中我也体会到了iOS开发的魅力，那就是所写即所得，你的代码质量能够直接从产出的app中体现出来。<br>但是，仍然仍然仍然有很多问题需要我们从再去梳理与升华，今天我们就又来聊聊这些问题。</p>
+<a id="more"></a>
+
+<h3 id="Fxxking-block"><a href="#Fxxking-block" class="headerlink" title="Fxxking block"></a>Fxxking block</h3><p>首先我还是先和大家继续聊聊block的问题，因为这个问题着实让我困扰了很久。<br>虽然看了很多block相关的介绍，但是都没有能够让我有一种豁然开朗的感觉。果然，这种事情还是得在开发之中去找G点的。<br>为了让各位能够更好的看懂block，我今天就用最通俗易懂的话来讲解什么事block。</p>
+<h4 id="回调（callback）"><a href="#回调（callback）" class="headerlink" title="回调（callback）"></a>回调（callback）</h4><p>这个词起源于酒店叫醒，酒店提供了一个叫醒服务，但是叫醒的具体方式是客户去决定的，所以酒店在叫醒客户时实际上就完成了这个回调的过程。<br>伪码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">酒店类：</span><br><span class="line"> - 叫醒（客户自定义方法）</span><br><span class="line"> </span><br><span class="line">客户类：</span><br><span class="line"> - 自定义叫醒方法</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 流程如下</span><br><span class="line">睡觉前</span><br><span class="line">用户使用酒店类的叫醒方法，并告诉酒店类自己希望的叫醒方式</span><br><span class="line">睡觉</span><br><span class="line">第二天早上</span><br><span class="line">酒店类叫醒用户，使用用户自定义的叫醒方式</span><br><span class="line">结束</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这就是一个典型的回调例子，即<strong><em>被调用方法使用调用者的代码段</em></strong>。<br>或许这么说仍然有同学会疑惑，那我们再把整个过程偏向代码规范一些：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">@interface Hotel</span><br><span class="line">- (void)callBack:(void (^)(void))userCustomBlock;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation</span><br><span class="line">- (void)callBack:(void (^)(void))userCustomBlock</span><br><span class="line">&#123;</span><br><span class="line">    dispatch_async(dispatch_main_queue, ^&#123;</span><br><span class="line">            &#x2F;&#x2F;wait until daybreak</span><br><span class="line">            !userCustomBlock ?: userCustomBlock;</span><br><span class="line">        &#125;    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface User</span><br><span class="line">- (void)callForWakeUp;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation</span><br><span class="line">- (void)callForWakeUp</span><br><span class="line">&#123;</span><br><span class="line">    Hotel *hotel &#x3D; [[Hotel alloc] init];</span><br><span class="line">    [hotel callBack:^&#123;</span><br><span class="line">        NSLog(@&quot;先打电话叫醒，不行就直接破门而入&quot;);</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; &#x3D;&#x3D;&#x3D; divider &#x3D;&#x3D;&#x3D;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">    User *me &#x3D; [[User alloc] init];</span><br><span class="line">    [me callForWakeUp];</span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>当然，上面的实现中也可以将user的自定义block作为属性持有，但是这里我们大体只演示回调这个过程。<br>不难从上面的代码看出，我们所写的自定义叫醒的代码段，作为一个“参数”(实际上也是)传入了callBack方法。不过这个参数有一些特殊，那就是它看起来不是某一类的实例(其实是)，而是一段代码段，这段代码是调用者使用时所编写的代码，但是却在被调用者中实现了。<br>你看，这就是回调。通过回调，我们可以极大的提升代码的复用率，因为对于hotel(被调用者)而言，叫醒方式是用户(调用者)自定义的，它的代码就可以一直被复用。<br>反之，如果我们不使用回调这个机制，那么对于每一个User实例(调用者)，hotel(被调用者)都要专门为其实现一个特定的调用方法。<br>在这个过程中，我们把参与回调的代码段成为Block，在java中这是lamda，在js中这是匿名函数，总之，每个语言都有自己对回调的实现方式(因为它实在是太好用了)。</p>
+<p>那么，什么时候我们需要用到Blcok呢？或者说什么时候使用Block更好呢？</p>
+<h4 id="时机"><a href="#时机" class="headerlink" title="时机"></a>时机</h4><p>我们不讲书本教程上提到的部分，仅凭我在开发过程中遇到的地方来说：</p>
+<ul>
+<li>需要异步传参数</li>
+<li>通过代码段复用代码</li>
+<li>异步执行时需要同步结束</li>
+</ul>
+<p>至于具体的细节，那就需要大家在开发过程中自己去细细体会了～</p>
+<h3 id="再聊多线程"><a href="#再聊多线程" class="headerlink" title="再聊多线程"></a>再聊多线程</h3><p>任务：就是执行操作的意思，换句话说就是你在线程中执行的那段代码。在 GCD 中是放在 block 中的。执行任务有两种方式：『同步执行』 和 『异步执行』。两者的主要区别是：是否等待队列的任务执行结束，以及是否具备开启新线程的能力。</p>
+<p>同步执行（sync）：<br>同步添加任务到指定的队列中，在添加的任务执行结束之前，会一直等待，直到队列里面的任务完成之后再继续执行。<br>只能在当前线程中执行任务，不具备开启新线程的能力。</p>
+<p>异步执行（async）：<br>异步添加任务到指定的队列中，它不会做任何等待，可以继续执行任务。<br>可以在新的线程中执行任务，具备开启新线程的能力。</p>
+<p>队列（Dispatch Queue）：这里的队列指执行任务的等待队列，即用来存放任务的队列。队列是一种特殊的线性表，采用 FIFO（先进先出）的原则，即新任务总是被插入到队列的末尾，而读取任务的时候总是从队列的头部开始读取。每读取一个任务，则从队列中释放一个任务。</p>
+<p>在 GCD 中有两种队列：『串行队列』 和 『并发队列』。两者都符合 FIFO（先进先出）的原则。两者的主要区别是：执行顺序不同，以及开启线程数不同。</p>
+<p>串行队列（Serial Dispatch Queue）：<br>每次只有一个任务被执行。让任务一个接着一个地执行。（只开启一个线程，一个任务执行完毕后，再执行下一个任务）</p>
+<p>并发队列（Concurrent Dispatch Queue）：<br>可以让多个任务并发（同时）执行。（可以开启多个线程，并且同时执行任务）</p>
+<p><img src="/images/pasted-16.png" alt="任务队列组合区别"></p>
+<h3 id="回首掏"><a href="#回首掏" class="headerlink" title="回首掏"></a>回首掏</h3><p>这个总结我写了两遍，第一遍写完发现本地编辑服务器没开…<br>所以直接什么都没有了，草<br>这一遍就大致总结一下，希望有所帮助吧</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Dive-into-iOS/" rel="tag"><i class="fa fa-tag"></i> Dive into iOS</a>
+              <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+              <a href="/tags/OC/" rel="tag"><i class="fa fa-tag"></i> OC</a>
+              <a href="/tags/Learn-OS/" rel="tag"><i class="fa fa-tag"></i> Learn OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/15/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-1-iOS%E5%BC%80%E5%8F%91%E5%9F%BA%E6%9C%AC%E7%9B%98/" rel="prev" title="[Dive into iOS]「Learning OS」 | chapter 1 iOS开发基本盘">
+      <i class="fa fa-chevron-left"></i> [Dive into iOS]「Learning OS」 | chapter 1 iOS开发基本盘
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
   window.addEventListener('tabs:register', () => {
     let activeClass = CONFIG.comments.activeClass;
     if (CONFIG.comments.storage) {
@@ -18,7 +330,175 @@
       localStorage.setItem('comments_active', commentClass);
     });
   }
-</script></div><div class="toggle sidebar-toggle"><span class="toggle-line toggle-line-first"></span><span class="toggle-line toggle-line-middle"></span><span class="toggle-line toggle-line-last"></span></div><aside class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc"> 文章目录</li><li class="sidebar-nav-overview"> 站点概览</li></ul><div class="post-toc-wrap sidebar-panel"><div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#闲聊一会"><span class="nav-number">1.</span> <span class="nav-text">闲聊一会</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fxxking-block"><span class="nav-number">1.1.</span> <span class="nav-text">Fxxking block</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回调（callback）"><span class="nav-number">1.1.1.</span> <span class="nav-text">回调（callback）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#时机"><span class="nav-number">1.1.2.</span> <span class="nav-text">时机</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再聊多线程"><span class="nav-number">1.2.</span> <span class="nav-text">再聊多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回首掏"><span class="nav-number">1.3.</span> <span class="nav-text">回首掏</span></a></li></ol></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"> <img class="site-author-image" itemprop="image" alt="Hahn Wang" src="/uploads/avatar.png"><p class="site-author-name" itemprop="name">Hahn Wang</p><div class="site-description" itemprop="description">A blog site of mine</div></div><div class="site-state-wrap motion-element"><nav class="site-state"><div class="site-state-item site-state-posts"> <a href="/archives/"><span class="site-state-item-count">10</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/"><span class="site-state-item-count">6</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/"><span class="site-state-item-count">16</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/HahnerO" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HahnerO" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="https://weibo.com/u/3261865815" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3261865815" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i> Weibo</a></span></div></div></div></aside><div id="sidebar-dimmer"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright"> &copy; <span itemprop="copyrightYear">2020</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">Hahn Wang</span></div><div><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script> <span id="busuanzi_container_site_pv" style="display:none">Total<span id="busuanzi_value_site_pv"></span> reads <span class="post-meta-divider">|</span></span> <span id="busuanzi_container_site_uv" style="display:none">About<span id="busuanzi_value_site_uv"></span> people</span></div></div></footer></div><script color="0,0,255" opacity="0.5" zindex="-1" count="150" src="/lib/canvas-nest/canvas-nest.min.js"></script><script src="/lib/anime.min.js"></script><script src="/lib/velocity/velocity.min.js"></script><script src="/lib/velocity/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/pisces.js"></script><script src="/js/next-boot.js"></script><script>function loadCount(){var d=document,n=d.createElement("script");n.src="https://Hahn Wang.disqus.com/count.js",n.id="dsq-count-scr",(d.head||d.body).appendChild(n)}window.addEventListener("load",loadCount,!1)</script><script>
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%81%8A%E4%B8%80%E4%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">闲聊一会</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fxxking-block"><span class="nav-number">1.1.</span> <span class="nav-text">Fxxking block</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%EF%BC%88callback%EF%BC%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">回调（callback）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%B6%E6%9C%BA"><span class="nav-number">1.1.2.</span> <span class="nav-text">时机</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E8%81%8A%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">再聊多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A6%96%E6%8E%8F"><span class="nav-number">1.3.</span> <span class="nav-text">回首掏</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hahn Wang"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">Hahn Wang</p>
+  <div class="site-description" itemprop="description">A blog site of mine</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HahnerO" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HahnerO" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/3261865815" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;3261865815" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hahn Wang</span>
+</div>
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    Total <span id="busuanzi_value_site_pv"></span> reads
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    About <span id="busuanzi_value_site_uv"></span> people
+</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://Hahn Wang.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
   var disqus_config = function() {
     this.page.url = "https://hahnero.github.io/2020/07/30/Dive-into-iOS-%E3%80%8CLearning-OS%E3%80%8D-chapter-2-iOS%E5%A4%AF%E5%AE%9E/";
     this.page.identifier = "2020/07/30/Dive-into-iOS-「Learning-OS」-chapter-2-iOS夯实/";
@@ -37,4 +517,7 @@
       (d.head || d.body).appendChild(s);
     }
   });
-</script></body></html>
+</script>
+
+</body>
+</html>
